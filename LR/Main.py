@@ -1,6 +1,7 @@
 from Warrior.Warrior import Warrior
 from Weapon.Bow import Bow
 from Weapon.Sword import Sword
+from Armor.Armor import Armor
 import random
 import copy
 
@@ -10,6 +11,17 @@ if __name__ == "__main__":
     warrior3 = Warrior('Воин3',30)
     warriors = [warrior1, warrior2, warrior3]
     copy_warriors = []
+
+    armor1 = Armor("Броня1", 50, 100)
+    armor2 = Armor("Броня2", 20, 100)
+    armor3 = Armor("Броня3", 100, 100)
+    armors = [armor1, armor2, armor3]
+
+    for i in range(len(armors)):
+        if random.choice([True, False]) == True:
+            armors[i].freeze()
+        if random.choice([True, False]) == True:
+            armors[i].burn()
 
     bow1 = Bow("Лук1", 30, 50)
     bow2 = Bow("Лук2", 10, 90)
@@ -32,6 +44,8 @@ if __name__ == "__main__":
     for i in range(len(warriors)):
         random.shuffle(weapons)
         warriors[i].setWeapon(weapons[:number_of_weapons])
+        warriors[i].setArmor(random.choice(armors))
+
 
     while True:
         while True:
@@ -49,6 +63,7 @@ if __name__ == "__main__":
                 print('%s нанес %s урона' % (x.name, x.strength))
             else:
                 print('Оружие, которое наносит урон: %s' % x.weapon[0].name)
+                print('%s одет в: %s' % (y.name, y.armor.__str__()))
                 y.health -= x.weapon[0].burn_attack(y)
                 x.weapon[0].freeze_attack(y)
                 if type(x.weapon[0]) == Sword and x.weapon[0].stamina == 0:
