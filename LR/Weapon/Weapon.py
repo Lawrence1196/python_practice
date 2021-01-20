@@ -1,4 +1,6 @@
-class Weapon():
+from Effects.Effects import Effects
+
+class Weapon(Effects):
     def __init__(self, name, damage):
         self.name = name
         self.__damage = damage

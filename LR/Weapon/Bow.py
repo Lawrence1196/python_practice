@@ -20,4 +20,4 @@ class Bow(Weapon):
             return 0
 
     def __str__(self):
-        return f"{Weapon.__str__(self)}, шанс попадания - {self.__chance}"
+        return f"{Weapon.__str__(self)}, шанс попадания - {self.__chance}, {self.effects_print()}"

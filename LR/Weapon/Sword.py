@@ -14,4 +14,4 @@ class Sword(Weapon):
         return self.damage * self.stamina
 
     def __str__(self):
-        return f"{Weapon.__str__(self)},уровень целости - {self.stamina}"
+        return f"{Weapon.__str__(self)},уровень целости - {self.stamina}, {self.effects_print()}"

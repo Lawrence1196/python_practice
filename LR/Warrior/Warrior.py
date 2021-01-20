@@ -1,4 +1,6 @@
 class Warrior:
+    count = 3
+
     def __init__(self, name, strength=20, health=100):
         self.name = name
         self.strength = strength

@@ -21,6 +21,10 @@ if __name__ == "__main__":
 
     thebest = 0
     for i in range(len(weapons)):
+        if random.choice([True, False]) == True:
+            weapons[i].freeze()
+        if random.choice([True, False]) == True:
+            weapons[i].burn()
         if (weapons[thebest].__le__(weapons[i])):
             thebest = i
 
@@ -30,20 +34,39 @@ if __name__ == "__main__":
         warriors[i].setWeapon(weapons[:number_of_weapons])
 
     while True:
-        if len(warriors) == 1:
-            print('Победил %s' % str(warriors[0]))
-            break
-        x = random.choice(warriors)
+        while True:
+            x = random.choice(warriors)
+            if x.weapon[0].stopfight_count == 0:
+                break
+            print('На %s действует заморозка %s ход(а)' % (
+            x.name, x.weapon[0].stopfight_count))
         y = random.choice(warriors)
-        if x != y:
+        if x != y and x.weapon[0].stopfight_count == 0:
             print('%s атакует %s' % (x.name, y.name))
-            y.health -= x.strength
+            if not x.weapon:
+                print('У %s нет оружия' % x.name)
+                y.health -= x.strength
+                print('%s нанес %s урона' % (x.name, x.strength))
+            else:
+                print('Оружие, которое наносит урон: %s' % x.weapon[0].name)
+                y.health -= x.weapon[0].burn_attack(y)
+                x.weapon[0].freeze_attack(y)
+                if type(x.weapon[0]) == Sword and x.weapon[0].stamina == 0:
+                    print('У %s сточился меч' % x.name)
+                    x.weapon.pop(0)
             print('У %s осталось %s HP \n' % (y.name, y.health))
-            copy_warriors = copy.copy(warriors)
-            for i in range(len(copy_warriors)):
-                if (copy_warriors[i].health <= 0):
+
+            copy_unit_list = copy.copy(warriors)
+            for i in range(len(copy_unit_list)):
+                if (copy_unit_list[i].health <= 0):
+                    weapon_of_dead = warriors[i].weapon
+                    print('%s получает все оружие %s:' % (x.name, y.name))
+                    for j in range(len(weapon_of_dead)):
+                        x.weapon.append(weapon_of_dead[j])
+                        print('%s' % weapon_of_dead[j].__str__())
                     warriors[i].__del__()
                     warriors.pop(i)
-            if y.health <= 0:
-                print('%s погиб от рук %s\n' % (x.name, y.name))
-                warriors.remove(x)
+
+            if len(warriors) == 1:
+                print('\nПобедил %s' % str(warriors[0]))
+                break
