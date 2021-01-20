@@ -4,6 +4,8 @@ class Warrior:
         self.strength = strength
         self.health = health
 
+    def setWeapon(self, weapon):
+        self.weapon = weapon
 
     def __str__(self):
         return f"{self.name}, сила - {self.strength}, осталось здоровья - {self.health} HP"

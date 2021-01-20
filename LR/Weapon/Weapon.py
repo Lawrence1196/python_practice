@@ -14,5 +14,8 @@ class Weapon():
         else:
             print("Недопустимая величина урона")
 
+    def __le__(self, weapon2):
+        return self.damage <= weapon2.damage
+
     def __str__(self):
         return f"Оружие - {self.name}, наносимый урон - {self.damage}"
